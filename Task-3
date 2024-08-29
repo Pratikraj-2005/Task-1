@@ -1,0 +1,46 @@
+Password Generator
+
+import random
+import string
+
+def generate_password(length, use_uppercase=True, use_digits=True, use_special=True):
+    # Define the character sets
+    lowercase = string.ascii_lowercase
+    uppercase = string.ascii_uppercase if use_uppercase else ''
+    digits = string.digits if use_digits else ''
+    special_chars = string.punctuation if use_special else ''
+    
+    # Combine all characters into a single pool
+    all_characters = lowercase + uppercase + digits + special_chars
+
+    if not all_characters:
+        raise ValueError("At least one character type must be selected.")
+
+    # Generate the password
+    password = ''.join(random.choice(all_characters) for _ in range(length))
+    
+    return password
+
+def main():
+    print("Password Generator")
+    
+    try:
+        # Get the desired length of the password from the user
+        length = int(input("Enter the desired length of the password: "))
+        if length < 1:
+            raise ValueError("Password length must be at least 1.")
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+        return
+
+    # Optionally, get additional preferences from the user
+    use_uppercase = input("Include uppercase letters? (y/n): ").lower() == 'y'
+    use_digits = input("Include digits? (y/n): ").lower() == 'y'
+    use_special = input("Include special characters? (y/n): ").lower() == 'y'
+
+    # Generate and display the password
+    password = generate_password(length, use_uppercase, use_digits, use_special)
+    print(f"Generated Password: {password}")
+
+if __name__ == "__main__":
+    main()
